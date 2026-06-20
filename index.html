@@ -266,51 +266,91 @@
 
     /* Classic Mode theme */
     body.classic {
-      --bg: #f8f0ff;
-      --text: #111;
-      --muted: #4b3f5c;
-      --line: #7b6d8d;
-      --card: #fffdf5;
-      --card-hover: #ffffff;
-      --pill-hover: #ffffff;
-      --accent: #0000ee;
+      --bg: #f5f5f0;
+      --text: #000;
+      --muted: #555;
+      --line: #aaa;
+      --card: #fff;
+      --card-hover: #fffff8;
+      --pill-hover: #fffff8;
+      --accent: #0000cc;
 
       font-family: Verdana, Geneva, sans-serif;
-      background: linear-gradient(135deg, #f8f0ff 0%, #e7fbff 50%, #fff7d6 100%);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      background: var(--bg);
+    }
+
+    body.classic main {
+      width: min(100% - 2rem, 680px);
+    }
+
+    body.classic .eyebrow {
+      font-size: 0;
     }
 
     body.classic .eyebrow::before {
-      content: "Welcome to my homepage · ";
+      content: "WELCOME TO MY HOMEPAGE";
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.2rem;
+    }
+
+    body.classic .eyebrow::after {
+      content: "Last updated: today";
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: normal;
+      font-weight: normal;
+      text-transform: none;
     }
 
     body.classic h1 {
-      letter-spacing: -0.04em;
-      text-shadow: 2px 2px 0 #d7ffd9;
+      letter-spacing: -0.02em;
     }
 
     body.classic .card {
-      border-radius: 4px;
-      border: 2px ridge var(--line);
-      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+      border-radius: 0;
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    body.classic .card,
+    body.classic .pill,
+    body.classic .classic-toggle {
+      transition: none;
     }
 
     body.classic .card:hover {
       transform: none;
       background: var(--card-hover);
+      border-color: var(--text);
     }
 
     body.classic a {
       color: #0000ee;
+      text-decoration: underline;
     }
 
     body.classic a:visited {
       color: #551a8b;
     }
 
+    body.classic footer::before {
+      content: "Visitor #" attr(data-visits);
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      font-family: Verdana, Geneva, sans-serif;
+    }
+
     body.classic footer::after {
-      content: "Best viewed with a home computer.";
+      content: "Optimized for Home Computer\2122 \A Mode: Classic";
+      white-space: pre;
       display: block;
       margin-top: 0.75rem;
+      font-size: 0.8rem;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -467,7 +507,9 @@
 
     (function() {
       var storageKey = 'swinton-theme';
+      var visitsKey = 'swinton-visits';
       var btn = document.getElementById('classic-toggle');
+      var footer = document.querySelector('footer');
       if (!btn) return;
 
       function setTheme(theme) {
@@ -475,12 +517,28 @@
         document.body.classList.toggle('classic', isClassic);
         btn.textContent = isClassic ? 'Return to the present →' : 'Beam into the future →';
         localStorage.setItem(storageKey, isClassic ? 'classic' : 'default');
+        if (footer) {
+          footer.dataset.visits = isClassic
+            ? String(parseInt(localStorage.getItem(visitsKey) || '0', 10)).padStart(6, '0')
+            : '';
+        }
+      }
+
+      // Increment visit count on classic mode load
+      if (localStorage.getItem(storageKey) === 'classic') {
+        var visits = parseInt(localStorage.getItem(visitsKey) || '0', 10) + 1;
+        localStorage.setItem(visitsKey, String(visits));
       }
 
       setTheme(localStorage.getItem(storageKey) === 'classic' ? 'classic' : 'default');
 
       btn.addEventListener('click', function() {
-        setTheme(document.body.classList.contains('classic') ? 'default' : 'classic');
+        var next = document.body.classList.contains('classic') ? 'default' : 'classic';
+        if (next === 'classic') {
+          var v = parseInt(localStorage.getItem(visitsKey) || '0', 10) + 1;
+          localStorage.setItem(visitsKey, String(v));
+        }
+        setTheme(next);
       });
     })();
   </script>
