@@ -224,10 +224,36 @@
     }
 
     footer {
+      position: relative;
+      overflow: hidden;
       color: var(--muted);
       border-top: 1px solid var(--line);
       padding-top: 2rem;
       font-size: 0.95rem;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("/record-spines-footer.png");
+      background-repeat: repeat-x;
+      background-size: auto 100%;
+      background-position: center;
+      opacity: 0.05;
+      filter: grayscale(0.9) contrast(0.9);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    footer > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    body.classic footer::before {
+      opacity: 0.09;
+      filter: grayscale(0.5) contrast(1);
     }
 
     @media (min-width: 720px) {
@@ -346,8 +372,7 @@
       color: #551a8b;
     }
 
-    body.classic footer::before {
-      content: "Visitor #" attr(data-visits);
+    .visitor-count {
       display: block;
       font-size: 0.8rem;
       margin-bottom: 0.5rem;
@@ -526,6 +551,22 @@
         if (link) link.href = isClassic ? '/favicon-classic.ico' : '/favicon.ico';
       }
 
+      function setVisitorCount(isClassic) {
+        if (!footer) return;
+        var el = footer.querySelector('.visitor-count');
+        if (isClassic) {
+          var count = String(parseInt(localStorage.getItem(visitsKey) || '0', 10)).padStart(6, '0');
+          if (!el) {
+            el = document.createElement('span');
+            el.className = 'visitor-count';
+            footer.insertBefore(el, footer.firstChild);
+          }
+          el.textContent = 'Visitor #' + count;
+        } else if (el) {
+          el.parentNode.removeChild(el);
+        }
+      }
+
       function setTheme(theme) {
         var isClassic = theme === 'classic';
         document.body.classList.toggle('classic', isClassic);
@@ -533,11 +574,7 @@
         localStorage.setItem(storageKey, isClassic ? 'classic' : 'default');
         document.title = isClassic ? 'Steve Winton — Homepage' : 'Steve Winton — Systems · Platforms · Music · Interfaces';
         setFavicon(isClassic);
-        if (footer) {
-          footer.dataset.visits = isClassic
-            ? String(parseInt(localStorage.getItem(visitsKey) || '0', 10)).padStart(6, '0')
-            : '';
-        }
+        setVisitorCount(isClassic);
       }
 
       // Increment visit count on classic mode load
@@ -545,6 +582,7 @@
         var visits = parseInt(localStorage.getItem(visitsKey) || '0', 10) + 1;
         localStorage.setItem(visitsKey, String(visits));
       }
+
 
       setTheme(localStorage.getItem(storageKey) === 'classic' ? 'classic' : 'default');
 
