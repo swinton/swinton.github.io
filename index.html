@@ -18,8 +18,22 @@
       --muted: #66615a;
       --line: #ddd6cb;
       --card: #fffaf2;
+      --card-hover: #fff;
+      --pill-hover: #fff;
       --accent: #1db954;
       --max: 760px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121110;
+        --text: #f0ece4;
+        --muted: #9e9890;
+        --line: #2e2b27;
+        --card: #1c1a17;
+        --card-hover: #252219;
+        --pill-hover: #252219;
+      }
     }
 
     * {
@@ -111,7 +125,7 @@
     .card:hover {
       transform: translateY(-2px);
       border-color: var(--text);
-      background: #fff;
+      background: var(--card-hover);
     }
 
     .card-title {
@@ -147,12 +161,12 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 0.45rem 0.8rem;
-      background: rgba(255, 255, 255, 0.35);
+      background: transparent;
     }
 
     .pill:hover {
       border-color: var(--text);
-      background: #fff;
+      background: var(--pill-hover);
     }
 
     footer {
