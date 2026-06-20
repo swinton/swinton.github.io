@@ -234,6 +234,90 @@
         grid-column: 1 / -1;
       }
     }
+
+    /* Classic Mode toggle button */
+    .theme-toggle-wrap {
+      margin-top: 1.5rem;
+    }
+
+    .classic-toggle {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      padding: 0.45rem 0.8rem;
+      cursor: pointer;
+      transition:
+        border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .classic-toggle:hover {
+      border-color: var(--text);
+      background: var(--pill-hover);
+    }
+
+    .classic-toggle:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Classic Mode theme */
+    body.classic {
+      --bg: #f8f0ff;
+      --text: #111;
+      --muted: #4b3f5c;
+      --line: #7b6d8d;
+      --card: #fffdf5;
+      --card-hover: #ffffff;
+      --pill-hover: #ffffff;
+      --accent: #0000ee;
+
+      font-family: Verdana, Geneva, sans-serif;
+      background: linear-gradient(135deg, #f8f0ff 0%, #e7fbff 50%, #fff7d6 100%);
+    }
+
+    body.classic .eyebrow::before {
+      content: "Welcome to my homepage · ";
+    }
+
+    body.classic h1 {
+      letter-spacing: -0.04em;
+      text-shadow: 2px 2px 0 #d7ffd9;
+    }
+
+    body.classic .card {
+      border-radius: 4px;
+      border: 2px ridge var(--line);
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    body.classic .card:hover {
+      transform: none;
+      background: var(--card-hover);
+    }
+
+    body.classic a {
+      color: #0000ee;
+    }
+
+    body.classic a:visited {
+      color: #551a8b;
+    }
+
+    body.classic footer::after {
+      content: "Best viewed with a home computer.";
+      display: block;
+      margin-top: 0.75rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .classic-toggle {
+        transition: none;
+      }
+    }
   </style>
 </head>
 
@@ -353,6 +437,12 @@
       Interfaces between people, platforms, APIs, automation, and music.<br>
       I program my home computer.<br>
       Beam myself into the future.
+
+      <div class="theme-toggle-wrap">
+        <button id="classic-toggle" class="classic-toggle" type="button">
+          Beam into the future →
+        </button>
+      </div>
     </footer>
   </main>
   <script>
@@ -372,6 +462,25 @@
         var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', next);
         update(next);
+      });
+    })();
+
+    (function() {
+      var storageKey = 'swinton-theme';
+      var btn = document.getElementById('classic-toggle');
+      if (!btn) return;
+
+      function setTheme(theme) {
+        var isClassic = theme === 'classic';
+        document.body.classList.toggle('classic', isClassic);
+        btn.textContent = isClassic ? 'Return to the present →' : 'Beam into the future →';
+        localStorage.setItem(storageKey, isClassic ? 'classic' : 'default');
+      }
+
+      setTheme(localStorage.getItem(storageKey) === 'classic' ? 'classic' : 'default');
+
+      btn.addEventListener('click', function() {
+        setTheme(document.body.classList.contains('classic') ? 'default' : 'classic');
       });
     })();
   </script>
