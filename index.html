@@ -1,0 +1,293 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Steve Winton — Interfaces</title>
+  <meta
+    name="description"
+    content="Product leader and systems thinker turning capabilities into reusable platforms and new interaction models."
+  />
+
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --text: #171717;
+      --muted: #66615a;
+      --line: #ddd6cb;
+      --card: #fffaf2;
+      --accent: #1db954;
+      --max: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+      padding: 4rem 0;
+    }
+
+    header {
+      margin-bottom: 3rem;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 9vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      margin: 0 0 1.25rem;
+    }
+
+    .lede {
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      line-height: 1.35;
+      max-width: 680px;
+      margin: 0;
+    }
+
+    .lede span {
+      color: var(--muted);
+    }
+
+    section {
+      border-top: 1px solid var(--line);
+      padding: 2rem 0;
+    }
+
+    h2 {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      display: block;
+      padding: 1.1rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      color: inherit;
+      text-decoration: none;
+      transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--text);
+      background: #fff;
+    }
+
+    .card-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .arrow {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .pill {
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .pill:hover {
+      border-color: var(--text);
+      background: #fff;
+    }
+
+    footer {
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Systems · Platforms · Music · Interfaces</div>
+      <h1>Steve Winton</h1>
+      <p class="lede">
+        Product leader and systems thinker turning capabilities into reusable
+        platforms and new interaction models
+        <span>— from public API experiments and workflow automation to developer
+        platforms and agentic infrastructure.</span>
+      </p>
+
+      <nav class="links" aria-label="Primary links">
+        <a class="pill" href="https://www.linkedin.com/in/stephenwinton">LinkedIn</a>
+        <a class="pill" href="https://github.com/swinton">GitHub</a>
+        <a class="pill" href="https://open.spotify.com/user/stevewinton">Spotify</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Selected Experiments</h2>
+
+      <div class="grid">
+        <a class="card wide" href="https://github.com/swinton/SpotHub">
+          <div class="card-title">
+            <span>SpotHub</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            Playlists as code: collaborative Spotify playlists managed through
+            pull requests, workflow automation, and APIs.
+          </p>
+        </a>
+
+        <a class="card" href="https://github.com/swinton/screenshot-website">
+          <div class="card-title">
+            <span>screenshot-website</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            A reusable GitHub Action that turns browser automation into a simple,
+            composable workflow primitive.
+          </p>
+        </a>
+
+        <a class="card" href="https://x.com/bbcweatherbot">
+          <div class="card-title">
+            <span>BBC Weather Bot</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            A BBC-funded public experiment exploring how owned data can travel
+            across public surfaces through automation.
+          </p>
+        </a>
+
+        <a class="card" href="https://x.com/nmstereo">
+          <div class="card-title">
+            <span>nmstereo</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            An early ambient computing experiment connecting Spotify and Twitter
+            APIs into a text-controlled shared listening experience.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Music</h2>
+
+      <div class="grid">
+        <a class="card" href="https://www.instagram.com/bernedoodle_beats">
+          <div class="card-title">
+            <span>Instagram</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            Visual notes on records, memory, objects, and listening culture.
+          </p>
+        </a>
+
+        <a class="card" href="https://open.spotify.com/playlist/4VxuXjRXoK1DqCbyrcah2R">
+          <div class="card-title">
+            <span>Playlist</span>
+            <span class="arrow">↗</span>
+          </div>
+          <p>
+            A companion listening surface connected to the visual project.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Work</h2>
+
+      <a class="card" href="https://www.linkedin.com/in/stephenwinton">
+        <div class="card-title">
+          <span>Product, platforms, APIs, systems</span>
+          <span class="arrow">↗</span>
+        </div>
+        <p>
+          Principal product manager with experience across developer platforms,
+          workflow systems, security infrastructure, and ecosystem products.
+        </p>
+      </a>
+    </section>
+
+    <footer>
+      Interfaces between people, platforms, APIs, automation, and music.
+    </footer>
+  </main>
+</body>
+</html>
+```
