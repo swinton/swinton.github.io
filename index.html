@@ -10,6 +10,14 @@
     content="Product leader and systems thinker turning capabilities into reusable platforms and new interaction models."
   />
 
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+
   <style>
     :root {
       --bg: #f7f4ee;
@@ -33,6 +41,48 @@
         --card-hover: #252219;
         --pill-hover: #252219;
       }
+    }
+
+    [data-theme="light"] {
+      --bg: #f7f4ee;
+      --text: #171717;
+      --muted: #66615a;
+      --line: #ddd6cb;
+      --card: #fffaf2;
+      --card-hover: #fff;
+      --pill-hover: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg: #121110;
+      --text: #f0ece4;
+      --muted: #9e9890;
+      --line: #2e2b27;
+      --card: #1c1a17;
+      --card-hover: #252219;
+      --pill-hover: #252219;
+    }
+
+    #theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.35rem 0.6rem;
+      line-height: 1;
+      transition:
+        border-color 160ms ease,
+        color 160ms ease;
+    }
+
+    #theme-toggle:hover {
+      border-color: var(--text);
+      color: var(--text);
     }
 
     * {
@@ -188,6 +238,8 @@
 </head>
 
 <body>
+  <button id="theme-toggle" aria-label="Toggle colour scheme"></button>
+
   <main>
     <header>
       <div class="eyebrow">Systems · Platforms · Music · Interfaces</div>
@@ -301,5 +353,25 @@
       Interfaces between people, platforms, APIs, automation, and music.
     </footer>
   </main>
+  <script>
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var root = document.documentElement;
+
+      function update(theme) {
+        root.dataset.theme = theme;
+        btn.textContent = theme === 'dark' ? '☀' : '☾';
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+
+      update(root.dataset.theme);
+
+      btn.addEventListener('click', function() {
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        update(next);
+      });
+    })();
+  </script>
 </body>
 </html>
