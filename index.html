@@ -10,6 +10,11 @@
     content="Product leader and systems thinker turning capabilities into reusable platforms and new interaction models."
   />
 
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
   <script>
     (function() {
       var saved = localStorage.getItem('theme');
@@ -516,11 +521,18 @@
       var footer = document.querySelector('footer');
       if (!btn) return;
 
+      function setFavicon(isClassic) {
+        var link = document.querySelector('link[rel="icon"][type="image/x-icon"]');
+        if (link) link.href = isClassic ? '/favicon-classic.ico' : '/favicon.ico';
+      }
+
       function setTheme(theme) {
         var isClassic = theme === 'classic';
         document.body.classList.toggle('classic', isClassic);
         btn.textContent = isClassic ? 'Return to the present →' : 'Beam into the future →';
         localStorage.setItem(storageKey, isClassic ? 'classic' : 'default');
+        document.title = isClassic ? 'Steve Winton — Homepage' : 'Steve Winton — Interfaces';
+        setFavicon(isClassic);
         if (footer) {
           footer.dataset.visits = isClassic
             ? String(parseInt(localStorage.getItem(visitsKey) || '0', 10)).padStart(6, '0')
